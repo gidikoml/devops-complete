@@ -3,29 +3,22 @@ name: devops-complete project CI/CD pipeline
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Set short SHA
-        run: |
-          echo "SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+        run: echo "SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
 
       - name: Login to DockerHub
-        run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Build Docker image
-        run: |
-          docker build -t arrovi18/devops-complete:${{ env.SHORT_SHA }} terraform-configs
+        run: docker build -t arrovi18/devops-complete:${{ env.SHORT_SHA }} terraform-configs
 
       - name: Push Docker image
-        run: |
-          docker push arrovi18/devops-complete:${{ env.SHORT_SHA }}
+        run: docker push arrovi18/devops-complete:${{ env.SHORT_SHA }}
