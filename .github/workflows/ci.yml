@@ -22,3 +22,15 @@ jobs:
 
       - name: Push Docker image
         run: docker push arrovi18/devops-complete:${{ env.SHORT_SHA }}
+        -name:congure git AUTHOR
+        run: |
+          git config --global user.name "gidikoml"
+
+          git config --global user.email "aroyovo376@gmail.com
+        - name: update helm-chart with new image tag
+        run: |
+          sed -i "s/tag: .*/tag: ${{ env.SHORT_SHA }}/" ./devops-complete-time-printer/values.yaml
+          cat ./devops-complete-time-printer/values.yaml
+          git add ./devops-complete-time-printer/values.yaml
+          git commit -m "Update image tag to ${{ env.SHORT_SHA }}"
+          git push
