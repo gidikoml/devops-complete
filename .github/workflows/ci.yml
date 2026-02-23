@@ -28,14 +28,28 @@ jobs:
       - name: Push Docker image
         run: docker push arrovi18/devops-complete:${{ env.SHORT_SHA }}
 
+      - name: Show directory structure (debug)
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Root content:"
+          ls
+          echo "Full tree:"
+          ls -R
+
       - name: Configure Git Author
         run: |
           git config --global user.name "gidikoml"
           git config --global user.email "aroyovo376@gmail.com"
 
-      - name: Update Helm chart with new image tag
+      - name: Update Helm chart image tag (safe)
         run: |
-          sed -i "s/tag: .*/tag: ${{ env.SHORT_SHA }}/" helm-chart/values.yaml
-          git add helm-chart/values.yaml
-          git commit -m "Update image tag to ${{ env.SHORT_SHA }}"
-          git push
+          if [ -f helm-chart/values.yaml ]; then
+            sed -i "s/tag: .*/tag: ${{ env.SHORT_SHA }}/" helm-chart/values.yaml
+            git add helm-chart/values.yaml
+            git commit -m "Update image tag to ${{ env.SHORT_SHA }}" || echo "No changes to commit"
+            git push
+          else
+            echo "helm-chart/values.yaml NOT FOUND"
+            exit 1
+          fi
