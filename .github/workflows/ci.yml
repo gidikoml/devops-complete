@@ -22,7 +22,7 @@ jobs:
 
       - name: Push Docker image
         run: docker push arrovi18/devops-complete:${{ env.SHORT_SHA }}
-        -name:congure git AUTHOR
+        -name:congure Git AUTHOR
         run: |
           git config --global user.name "gidikoml"
 
