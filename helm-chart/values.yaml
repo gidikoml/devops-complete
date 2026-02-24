@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: arrovi18/devops-complete
-  tag: 988ed7f
+  tag: 6f1f7d3
   pullPolicy: Always
 
 imagePullSecrets: []
