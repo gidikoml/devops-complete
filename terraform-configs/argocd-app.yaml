@@ -1,0 +1,19 @@
+apiversion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: devops-complete
+  namespace: argocd
+
+spec:
+  project: default
+  source:
+    repoURL: ' 
+    targetRevision: HEAD
+    Path: 'devops-complete-time-printer'
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
