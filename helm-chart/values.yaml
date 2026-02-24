@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: arrovi18/devops-complete
-  tag: "1009e75"
+  tag: 56feb56
   pullPolicy: Always
 
 
