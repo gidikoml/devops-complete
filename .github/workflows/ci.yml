@@ -52,4 +52,4 @@ jobs:
           else
             echo "helm-chart/values.yaml NOT FOUND"
             exit 1
-          fi
+          ficd terraform-configs

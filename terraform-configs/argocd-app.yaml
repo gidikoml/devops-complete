@@ -1,4 +1,4 @@
-apiversion: argoproj.io/v1alpha1
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: devops-complete
@@ -6,13 +6,16 @@ metadata:
 
 spec:
   project: default
+
   source:
-    repoURL: ' 
-    targetRevision: HEAD
-    Path: 'devops-complete-time-printer'
+    repoURL: https://github.com/gidikoml/devops-complete.git
+    targetRevision: main
+    path: helm-chart
+
   destination:
-    server: 'https://kubernetes.default.svc'
+    server: https://kubernetes.default.svc
     namespace: default
+
   syncPolicy:
     automated:
       prune: true
