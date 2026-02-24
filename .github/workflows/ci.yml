@@ -43,13 +43,18 @@ jobs:
           git config --global user.email "aroyovo376@gmail.com"
 
       - name: Update Helm chart image tag (safe)
+        shell: bash
         run: |
-          if [ -f helm-chart/values.yaml ]; then
-            sed -i "s/tag: .*/tag: ${{ env.SHORT_SHA }}/" helm-chart/values.yaml
-            git add helm-chart/values.yaml
-            git commit -m "Update image tag to ${{ env.SHORT_SHA }}" || echo "No changes to commit"
+          FILE="helm-chart/values.yaml"
+
+          if [ -f "$FILE" ]; then
+            echo "Updating Helm chart image tag..."
+
+            sed -i "s/tag: .*/tag: ${SHORT_SHA}/" "$FILE"
+
+            git add "$FILE"
+            git commit -m "Update image tag to ${SHORT_SHA}" || echo "No changes to commit"
             git push
           else
             echo "helm-chart/values.yaml NOT FOUND"
-            exit 1
-          ficd terraform-configs
+          fi
