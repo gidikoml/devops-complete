@@ -1,9 +1,9 @@
 replicaCount: 1
+
 image:
   repository: arrovi18/devops-complete
   tag: 56feb56
   pullPolicy: Always
-
 
 imagePullSecrets: []
 nameOverride: ""
@@ -24,7 +24,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 8080
+  port: 15264
 
 ingress:
   enabled: false
@@ -62,12 +62,12 @@ resources:
 livenessProbe:
   httpGet:
     path: /
-    port: http
+    port: 15264
 
 readinessProbe:
   httpGet:
     path: /
-    port: http
+    port: 15264
 
 autoscaling:
   enabled: false
